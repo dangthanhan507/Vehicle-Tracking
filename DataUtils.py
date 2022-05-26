@@ -33,6 +33,6 @@ if __name__ == "__main__":
         print(time_data)
 
     try:
-        pose.readt ()
+        pose.read()
     except Exception as e:
         print(f"Exception caught, message: {e}")
