@@ -12,8 +12,8 @@ class DataInterface:
         self.imu_data = np.loadtxt(imu, delimiter=",")
         self.encoders_data = np.loadtxt(encoders, delimiter=",")
         self._current_gps_time = 0
-        self._current_imu_time = 0
-        self._current_encoders_time = 0
+        self._current_imu_time = -1
+        self._current_encoders_time = -1
 
     def read(self):
         if self._current_gps_time >= self.get_end_time():
@@ -21,7 +21,7 @@ class DataInterface:
 
         gps_curr_time = self.gps_data[self._current_gps_time, 0]
         imu_time_idx = np.where((self.imu_data[self._current_imu_time + 1:, 0] - gps_curr_time) > 1e-5)[0]
-        encoders_time_idx = np.where((self.encoders_data[self._current_encoders_time + 1:, 0] > gps_curr_time) > 1e-5)[0]
+        encoders_time_idx = np.where((self.encoders_data[self._current_encoders_time + 1:, 0] - gps_curr_time) > 1e-5)[0]
 
         if len(imu_time_idx) == 0 or len(encoders_time_idx) == 0:
             raise Exception("We have reached the end of the data...")
