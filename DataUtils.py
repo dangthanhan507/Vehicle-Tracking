@@ -43,6 +43,11 @@ class DataInterface:
     def get_end_time(self):
         return self.gps_data.shape[0]
 
+    def reset(self):
+        self._current_gps_time = 0
+        self._current_imu_time = -1
+        self._current_encoders_time = -1
+
 if __name__ == "__main__":
     # Test with Pose Data
     data_interface = DataInterface(
